@@ -19,6 +19,10 @@ public class LeadSocialMessage {
 	private String direction;
 	private String message;
 	private String sentBy;
+	private String recipient;
+	private String status; // SENT, DELIVERED, READ, FAILED
+	private String campaignId;
+	private String messageId; // External platform message ID
 
 	private LocalDateTime timestamp;
 
@@ -34,6 +38,10 @@ public class LeadSocialMessage {
 		this.direction = builder.direction;
 		this.message = builder.message;
 		this.sentBy = builder.sentBy;
+		this.recipient = builder.recipient;
+		this.status = builder.status;
+		this.campaignId = builder.campaignId;
+		this.messageId = builder.messageId;
 		this.timestamp = builder.timestamp;
 	}
 
@@ -48,6 +56,10 @@ public class LeadSocialMessage {
 		private String direction;
 		private String message;
 		private String sentBy;
+		private String recipient;
+		private String status;
+		private String campaignId;
+		private String messageId;
 		private LocalDateTime timestamp;
 
 		public Builder id(Long id) {
@@ -77,6 +89,26 @@ public class LeadSocialMessage {
 
 		public Builder sentBy(String sentBy) {
 			this.sentBy = sentBy;
+			return this;
+		}
+
+		public Builder recipient(String recipient) {
+			this.recipient = recipient;
+			return this;
+		}
+
+		public Builder status(String status) {
+			this.status = status;
+			return this;
+		}
+
+		public Builder campaignId(String campaignId) {
+			this.campaignId = campaignId;
+			return this;
+		}
+
+		public Builder messageId(String messageId) {
+			this.messageId = messageId;
 			return this;
 		}
 
@@ -145,5 +177,37 @@ public class LeadSocialMessage {
 
 	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	public String getRecipient() {
+		return recipient;
+	}
+
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getCampaignId() {
+		return campaignId;
+	}
+
+	public void setCampaignId(String campaignId) {
+		this.campaignId = campaignId;
+	}
+
+	public String getMessageId() {
+		return messageId;
+	}
+
+	public void setMessageId(String messageId) {
+		this.messageId = messageId;
 	}
 }

@@ -42,6 +42,22 @@ public class Campaign {
     @Column(name = "expected_revenue", precision = 15, scale = 2)
     private BigDecimal expectedRevenue;
     
+    // Social Media Campaign Analytics
+    @Column(name = "total_sent")
+    private Integer totalSent = 0;
+    
+    @Column(name = "total_delivered")
+    private Integer totalDelivered = 0;
+    
+    @Column(name = "total_read")
+    private Integer totalRead = 0;
+    
+    @Column(name = "total_replied")
+    private Integer totalReplied = 0;
+    
+    @Column(name = "platforms", columnDefinition = "TEXT")
+    private String platforms; // JSON: ["whatsapp","facebook"]
+    
     @Column(name = "owner_id")
     private Long ownerId;
     
@@ -93,4 +109,19 @@ public class Campaign {
     
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    
+    public Integer getTotalSent() { return totalSent; }
+    public void setTotalSent(Integer totalSent) { this.totalSent = totalSent; }
+    
+    public Integer getTotalDelivered() { return totalDelivered; }
+    public void setTotalDelivered(Integer totalDelivered) { this.totalDelivered = totalDelivered; }
+    
+    public Integer getTotalRead() { return totalRead; }
+    public void setTotalRead(Integer totalRead) { this.totalRead = totalRead; }
+    
+    public Integer getTotalReplied() { return totalReplied; }
+    public void setTotalReplied(Integer totalReplied) { this.totalReplied = totalReplied; }
+    
+    public String getPlatforms() { return platforms; }
+    public void setPlatforms(String platforms) { this.platforms = platforms; }
 }
