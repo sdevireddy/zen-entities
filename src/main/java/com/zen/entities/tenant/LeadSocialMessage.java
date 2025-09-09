@@ -14,6 +14,10 @@ public class LeadSocialMessage {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lead_id", nullable = false)
 	private Lead lead;
+	
+	// Compatibility field for services that use leadId directly
+	@Column(name = "lead_id", insertable = false, updatable = false)
+	private Long leadId;
 
 	private String platform;
 	private String direction;
@@ -137,6 +141,20 @@ public class LeadSocialMessage {
 
 	public void setLead(Lead lead) {
 		this.lead = lead;
+	}
+	
+	// Compatibility methods for leadId
+	public Long getLeadId() {
+		return leadId;
+	}
+	
+	public void setLeadId(Long leadId) {
+		this.leadId = leadId;
+		if (leadId != null) {
+			Lead lead = new Lead();
+			lead.setId(leadId);
+			this.lead = lead;
+		}
 	}
 
 	public String getPlatform() {
