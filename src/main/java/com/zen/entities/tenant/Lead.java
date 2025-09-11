@@ -24,7 +24,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "leads")
 
 @NoArgsConstructor
-@AllArgsConstructor
 
 public class Lead {
     @Id
@@ -58,6 +57,23 @@ public class Lead {
     private String twitter;
     private String description;
     private Boolean converted = false;
+    @Column(name = "address_line1")
+    private String addressLine1;
+    @Column(name = "address_line2")
+    private String addressLine2;
+    private String city;
+    private String state;
+    @Column(name = "zip_code")
+    private String zipCode;
+    private String country;
+    @Column(name = "image_url")
+    private String imageUrl;
+    @Column(name = "lead_score")
+    private Integer leadScore = 0;
+    @Column(name = "score_reason")
+    private String scoreReason;
+    @Column(name = "qualified_date")
+    private LocalDateTime qualifiedDate;
 
     @Column(name = "created_at", nullable = false, updatable = false)
 	private LocalDateTime createdAt;
@@ -145,6 +161,7 @@ public class Lead {
 	public void setLeadSource(LeadSource leadSource) {
 		this.leadSource = leadSource;
 	}
+
 	public LeadStatus getLeadStatus() {
 		return leadStatus;
 	}
@@ -275,14 +292,74 @@ public class Lead {
 	public void setConverted(Boolean converted) {
 		this.converted = converted;
 	}
+	public String getAddressLine1() {
+		return addressLine1;
+	}
+	public void setAddressLine1(String addressLine1) {
+		this.addressLine1 = addressLine1;
+	}
+	public String getAddressLine2() {
+		return addressLine2;
+	}
+	public void setAddressLine2(String addressLine2) {
+		this.addressLine2 = addressLine2;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getZipCode() {
+		return zipCode;
+	}
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public Integer getLeadScore() {
+		return leadScore;
+	}
+	public void setLeadScore(Integer leadScore) {
+		this.leadScore = leadScore;
+	}
+	public String getScoreReason() {
+		return scoreReason;
+	}
+	public void setScoreReason(String scoreReason) {
+		this.scoreReason = scoreReason;
+	}
+	public LocalDateTime getQualifiedDate() {
+		return qualifiedDate;
+	}
+	public void setQualifiedDate(LocalDateTime qualifiedDate) {
+		this.qualifiedDate = qualifiedDate;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
 	@PrePersist
 	protected void onCreate() {
-	    this.createdAt = LocalDateTime.now();
+		this.createdAt = LocalDateTime.now();
 	}
 
 	@PreUpdate
 	protected void onUpdate() {
-	    this.updatedAt = LocalDateTime.now();
+		this.updatedAt = LocalDateTime.now();
 	}
 }

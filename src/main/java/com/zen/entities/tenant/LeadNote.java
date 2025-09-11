@@ -17,6 +17,10 @@ public class LeadNote {
     @Column(name = "note", columnDefinition = "LONGTEXT")
     private String note;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by")
+    private ZenUser createdBy;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 	public Long getId() {
@@ -44,6 +48,10 @@ public class LeadNote {
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
-    
-    
+	public ZenUser getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(ZenUser createdBy) {
+		this.createdBy = createdBy;
+	}
 }
