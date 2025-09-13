@@ -9,7 +9,11 @@ import com.zen.entities.tenant.enums.PaymentStatus;
 
 @Entity
 @Table(name = "invoices")
-@AttributeOverride(name = "id", column = @Column(name = "invoice_id"))
+@AttributeOverrides({
+    @AttributeOverride(name = "id", column = @Column(name = "invoice_id")),
+    @AttributeOverride(name = "documentNumber", column = @Column(name = "invoice_number")),
+    @AttributeOverride(name = "ownerId", column = @Column(name = "owner_user_id"))
+})
 public class Invoice extends DocumentBase {
     
     @ManyToOne(fetch = FetchType.LAZY)

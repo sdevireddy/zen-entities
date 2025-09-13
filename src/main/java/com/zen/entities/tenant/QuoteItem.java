@@ -5,141 +5,98 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "quote_items")
-@AttributeOverride(name = "id", column = @Column(name = "item_id"))
-public class QuoteItem extends DocumentItemBase {
+public class QuoteItem {
 
-	@ManyToOne
-	@JoinColumn(name = "quote_id")
-	private Quote quote;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private BigDecimal discountValue;
-	private BigDecimal taxRatePct;
-	private Integer sortOrder;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "quote_id")
+    private Quote quote;
 
-	// No-arg constructor
-	public QuoteItem() {
-	}
+    @Column(name = "product_id")
+    private Long productId;
 
-	// All-args constructor
-	public QuoteItem(Long itemId, String productName, String productCode, BigDecimal unitPrice, Integer quantity,
-			BigDecimal total, String description, Quote quote, BigDecimal discountValue, BigDecimal taxRatePct,
-			Integer sortOrder) {
-		super(itemId, productName, productCode, unitPrice, quantity, total, description);
-		this.quote = quote;
-		this.discountValue = discountValue;
-		this.taxRatePct = taxRatePct;
-		this.sortOrder = sortOrder;
-	}
+    @Column(name = "product_code")
+    private String productCode;
 
-	// Getters and Setters
-	public Quote getQuote() {
-		return quote;
-	}
+    @Column(name = "product_name")
+    private String productName;
 
-	public void setQuote(Quote quote) {
-		this.quote = quote;
-	}
+    @Column(name = "description")
+    private String description;
 
-	public BigDecimal getDiscountValue() {
-		return discountValue;
-	}
+    @Column(name = "quantity")
+    private Integer quantity;
 
-	public void setDiscountValue(BigDecimal discountValue) {
-		this.discountValue = discountValue;
-	}
+    @Column(name = "unit_price", precision = 10, scale = 2)
+    private BigDecimal unitPrice;
 
-	public BigDecimal getTaxRatePct() {
-		return taxRatePct;
-	}
+    @Column(name = "discount_type")
+    private String discountType;
 
-	public void setTaxRatePct(BigDecimal taxRatePct) {
-		this.taxRatePct = taxRatePct;
-	}
+    @Column(name = "discount_value", precision = 10, scale = 2)
+    private BigDecimal discountValue;
 
-	public Integer getSortOrder() {
-		return sortOrder;
-	}
+    @Column(name = "tax_rate_pct", precision = 5, scale = 2)
+    private BigDecimal taxRatePct;
 
-	public void setSortOrder(Integer sortOrder) {
-		this.sortOrder = sortOrder;
-	}
+    @Column(name = "line_subtotal", precision = 10, scale = 2)
+    private BigDecimal lineSubtotal;
 
-	// Builder
-	public static class Builder {
-		private Long itemId;
-		private String productName;
-		private String productCode;
-		private BigDecimal unitPrice;
-		private Integer quantity;
-		private BigDecimal total;
-		private String description;
-		private Quote quote;
-		private BigDecimal discountValue;
-		private BigDecimal taxRatePct;
-		private Integer sortOrder;
+    @Column(name = "line_tax_total", precision = 10, scale = 2)
+    private BigDecimal lineTaxTotal;
 
-		public Builder itemId(Long itemId) {
-			this.itemId = itemId;
-			return this;
-		}
+    @Column(name = "line_total", precision = 10, scale = 2)
+    private BigDecimal lineTotal;
 
-		public Builder productName(String productName) {
-			this.productName = productName;
-			return this;
-		}
+    @Column(name = "sort_order")
+    private Integer sortOrder;
 
-		public Builder productCode(String productCode) {
-			this.productCode = productCode;
-			return this;
-		}
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-		public Builder unitPrice(BigDecimal unitPrice) {
-			this.unitPrice = unitPrice;
-			return this;
-		}
+    public Quote getQuote() { return quote; }
+    public void setQuote(Quote quote) { this.quote = quote; }
 
-		public Builder quantity(Integer quantity) {
-			this.quantity = quantity;
-			return this;
-		}
+    public Long getProductId() { return productId; }
+    public void setProductId(Long productId) { this.productId = productId; }
 
-		public Builder total(BigDecimal total) {
-			this.total = total;
-			return this;
-		}
+    public String getProductCode() { return productCode; }
+    public void setProductCode(String productCode) { this.productCode = productCode; }
 
-		public Builder description(String description) {
-			this.description = description;
-			return this;
-		}
+    public String getProductName() { return productName; }
+    public void setProductName(String productName) { this.productName = productName; }
 
-		public Builder quote(Quote quote) {
-			this.quote = quote;
-			return this;
-		}
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-		public Builder discountValue(BigDecimal discountValue) {
-			this.discountValue = discountValue;
-			return this;
-		}
+    public Integer getQuantity() { return quantity; }
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
-		public Builder taxRatePct(BigDecimal taxRatePct) {
-			this.taxRatePct = taxRatePct;
-			return this;
-		}
+    public BigDecimal getUnitPrice() { return unitPrice; }
+    public void setUnitPrice(BigDecimal unitPrice) { this.unitPrice = unitPrice; }
 
-		public Builder sortOrder(Integer sortOrder) {
-			this.sortOrder = sortOrder;
-			return this;
-		}
+    public String getDiscountType() { return discountType; }
+    public void setDiscountType(String discountType) { this.discountType = discountType; }
 
-		public QuoteItem build() {
-			return new QuoteItem(itemId, productName, productCode, unitPrice, quantity, total, description, quote,
-					discountValue, taxRatePct, sortOrder);
-		}
+    public BigDecimal getDiscountValue() { return discountValue; }
+    public void setDiscountValue(BigDecimal discountValue) { this.discountValue = discountValue; }
 
-		public static Builder builder() {
-			return new Builder();
-		}
-	}
+    public BigDecimal getTaxRatePct() { return taxRatePct; }
+    public void setTaxRatePct(BigDecimal taxRatePct) { this.taxRatePct = taxRatePct; }
+
+    public BigDecimal getLineSubtotal() { return lineSubtotal; }
+    public void setLineSubtotal(BigDecimal lineSubtotal) { this.lineSubtotal = lineSubtotal; }
+
+    public BigDecimal getLineTaxTotal() { return lineTaxTotal; }
+    public void setLineTaxTotal(BigDecimal lineTaxTotal) { this.lineTaxTotal = lineTaxTotal; }
+
+    public BigDecimal getLineTotal() { return lineTotal; }
+    public void setLineTotal(BigDecimal lineTotal) { this.lineTotal = lineTotal; }
+
+    public Integer getSortOrder() { return sortOrder; }
+    public void setSortOrder(Integer sortOrder) { this.sortOrder = sortOrder; }
 }

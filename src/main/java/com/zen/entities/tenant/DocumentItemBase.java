@@ -33,26 +33,26 @@ public abstract class DocumentItemBase {
 	protected BigDecimal unitPrice;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "discount_type", length = 20, nullable = false)
-	protected DiscountType discountType;
+	@Column(name = "discount_type", length = 20)
+	protected DiscountType discountType = DiscountType.NONE;
 
-	@Column(name = "discount_value", precision = 18, scale = 2, nullable = false)
-	protected BigDecimal discountValue;
+	@Column(name = "discount_value", precision = 18, scale = 2)
+	protected BigDecimal discountValue = BigDecimal.ZERO;
 
-	@Column(name = "tax_rate_pct", precision = 5, scale = 2, nullable = false)
-	protected BigDecimal taxRatePct;
+	@Column(name = "tax_rate_pct", precision = 5, scale = 2)
+	protected BigDecimal taxRatePct = BigDecimal.ZERO;
 
-	@Column(name = "line_subtotal", precision = 18, scale = 2, nullable = false)
-	protected BigDecimal lineSubtotal;
+	@Column(name = "line_subtotal", precision = 18, scale = 2)
+	protected BigDecimal lineSubtotal = BigDecimal.ZERO;
 
-	@Column(name = "line_tax_total", precision = 18, scale = 2, nullable = false)
-	protected BigDecimal lineTaxTotal;
+	@Column(name = "line_tax_total", precision = 18, scale = 2)
+	protected BigDecimal lineTaxTotal = BigDecimal.ZERO;
 
-	@Column(name = "line_total", precision = 18, scale = 2, nullable = false)
-	protected BigDecimal lineTotal;
+	@Column(name = "line_total", precision = 18, scale = 2)
+	protected BigDecimal lineTotal = BigDecimal.ZERO;
 
-	@Column(name = "sort_order", nullable = false)
-	protected Integer sortOrder;
+	@Column(name = "sort_order")
+	protected Integer sortOrder = 1;
 
 	// No-arg constructor
 	public DocumentItemBase() {
@@ -69,13 +69,13 @@ public abstract class DocumentItemBase {
 		this.description = description;
 		this.quantity = quantity;
 		this.unitPrice = unitPrice;
-		this.discountType = discountType;
-		this.discountValue = discountValue;
-		this.taxRatePct = taxRatePct;
-		this.lineSubtotal = lineSubtotal;
-		this.lineTaxTotal = lineTaxTotal;
-		this.lineTotal = lineTotal;
-		this.sortOrder = sortOrder;
+		this.discountType = discountType != null ? discountType : DiscountType.NONE;
+		this.discountValue = discountValue != null ? discountValue : BigDecimal.ZERO;
+		this.taxRatePct = taxRatePct != null ? taxRatePct : BigDecimal.ZERO;
+		this.lineSubtotal = lineSubtotal != null ? lineSubtotal : BigDecimal.ZERO;
+		this.lineTaxTotal = lineTaxTotal != null ? lineTaxTotal : BigDecimal.ZERO;
+		this.lineTotal = lineTotal != null ? lineTotal : BigDecimal.ZERO;
+		this.sortOrder = sortOrder != null ? sortOrder : 1;
 	}
 
 	// DTO-style constructor
@@ -146,6 +146,8 @@ public abstract class DocumentItemBase {
 	public void setUnitPrice(BigDecimal unitPrice) {
 		this.unitPrice = unitPrice;
 	}
+
+
 
 	public DiscountType getDiscountType() {
 		return discountType;
@@ -248,6 +250,8 @@ public abstract class DocumentItemBase {
 			this.unitPrice = unitPrice;
 			return this;
 		}
+
+
 
 		public Builder discountType(DiscountType discountType) {
 			this.discountType = discountType;

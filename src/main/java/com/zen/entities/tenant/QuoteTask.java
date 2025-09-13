@@ -1,105 +1,73 @@
 package com.zen.entities.tenant;
 
-import java.time.LocalDateTime;
-
-import com.zen.entities.tenant.enums.TaskStatus;
-
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "quote_tasks")
 public class QuoteTask {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "task_id")
-	private Long taskId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long taskId;
 
-	@ManyToOne
-	@JoinColumn(name = "quote_id", nullable = false)
-	private Quote quote;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "quote_id")
+    private Quote quote;
 
-	@Column(name = "task_name", nullable = false, length = 255)
-	private String taskName;
+    @Column(name = "task_title")
+    private String taskName;
 
-	@Column(name = "task_description")
-	private String taskDescription;
+    @Column(name = "task_description")
+    private String taskDescription;
+    
+    // JPA expects these field names in queries
+    public String getTask_name() { return taskName; }
+    public void setTask_name(String taskName) { this.taskName = taskName; }
+    
+    public String getTask_description() { return taskDescription; }
+    public void setTask_description(String taskDescription) { this.taskDescription = taskDescription; }
 
-	@Column(name = "due_date")
-	private LocalDateTime dueDate;
+    @Column(name = "due_date")
+    private LocalDateTime dueDate;
 
-	@Column(name = "assigned_to")
-	private Long assignedTo;
+    @Column(name = "assigned_to")
+    private String assignedTo;
 
-	@Column(name = "created_at")
-	private LocalDateTime createdAt;
+    @Column(name = "status")
+    private String status;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "status", length = 50)
-	private TaskStatus status;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-	// Getters & Setters
-	public Long getTaskId() {
-		return taskId;
-	}
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 
-	public void setTaskId(Long taskId) {
-		this.taskId = taskId;
-	}
+    // Getters and Setters
+    public Long getTaskId() { return taskId; }
+    public void setTaskId(Long taskId) { this.taskId = taskId; }
 
-	public Quote getQuote() {
-		return quote;
-	}
+    public Quote getQuote() { return quote; }
+    public void setQuote(Quote quote) { this.quote = quote; }
 
-	public void setQuote(Quote quote) {
-		this.quote = quote;
-	}
+    public String getTaskName() { return taskName; }
+    public void setTaskName(String taskName) { this.taskName = taskName; }
 
-	public String getTaskName() {
-		return taskName;
-	}
+    public String getTaskDescription() { return taskDescription; }
+    public void setTaskDescription(String taskDescription) { this.taskDescription = taskDescription; }
 
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
+    public LocalDateTime getDueDate() { return dueDate; }
+    public void setDueDate(LocalDateTime dueDate) { this.dueDate = dueDate; }
 
-	public String getTaskDescription() {
-		return taskDescription;
-	}
+    public String getAssignedTo() { return assignedTo; }
+    public void setAssignedTo(String assignedTo) { this.assignedTo = assignedTo; }
 
-	public void setTaskDescription(String taskDescription) {
-		this.taskDescription = taskDescription;
-	}
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-	public LocalDateTime getDueDate() {
-		return dueDate;
-	}
-
-	public void setDueDate(LocalDateTime dueDate) {
-		this.dueDate = dueDate;
-	}
-
-	public Long getAssignedTo() {
-		return assignedTo;
-	}
-
-	public void setAssignedTo(Long assignedTo) {
-		this.assignedTo = assignedTo;
-	}
-
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public TaskStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(TaskStatus status) {
-		this.status = status;
-	}
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }

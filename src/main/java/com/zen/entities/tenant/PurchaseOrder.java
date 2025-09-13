@@ -8,7 +8,11 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "purchase_orders")
-@AttributeOverride(name = "id", column = @Column(name = "purchase_order_id"))
+@AttributeOverrides({
+    @AttributeOverride(name = "id", column = @Column(name = "purchase_order_id")),
+    @AttributeOverride(name = "documentNumber", column = @Column(name = "po_number")),
+    @AttributeOverride(name = "ownerId", column = @Column(name = "owner_user_id"))
+})
 public class PurchaseOrder extends DocumentBase {
     
     @ManyToOne(fetch = FetchType.LAZY)

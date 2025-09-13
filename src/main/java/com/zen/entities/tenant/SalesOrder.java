@@ -10,6 +10,7 @@ import org.hibernate.annotations.FetchMode;
 import com.zen.entities.tenant.enums.SalesOrderStatus;
 
 import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,12 +24,14 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "sales_orders")
-@AttributeOverride(name = "id", column = @Column(name = "sales_order_id"))
+@AttributeOverrides({
+    @AttributeOverride(name = "id", column = @Column(name = "sales_order_id")),
+    @AttributeOverride(name = "documentNumber", column = @Column(name = "order_number")),
+    @AttributeOverride(name = "ownerId", column = @Column(name = "owner_user_id"))
+})
 public class SalesOrder extends DocumentBase {
 
-    // ---- Core fields ----
-    @Column(name = "order_number", unique = true, length = 100, nullable = false)
-    private String orderNumber;
+    // orderNumber is inherited from DocumentBase as documentNumber
 
     @Column(name = "currency_code", length = 3, nullable = false)
     private String currencyCode = "USD";
@@ -161,8 +164,8 @@ public class SalesOrder extends DocumentBase {
     }
 
     // ---- Getters & Setters ----
-    public String getOrderNumber() { return orderNumber; }
-    public void setOrderNumber(String orderNumber) { this.orderNumber = orderNumber; }
+    public String getOrderNumber() { return getDocumentNumber(); }
+    public void setOrderNumber(String orderNumber) { setDocumentNumber(orderNumber); }
 
     public String getCurrencyCode() { return currencyCode; }
     public void setCurrencyCode(String currencyCode) { this.currencyCode = currencyCode; }

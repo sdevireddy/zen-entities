@@ -1,20 +1,8 @@
 package com.zen.entities.tenant;
 
+import jakarta.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.zen.entities.tenant.enums.CampaignStatus;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "quote_campaigns")
@@ -22,96 +10,61 @@ public class QuoteCampaign {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "campaign_id")
-    private Long campaignId;
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "quote_id", nullable = false)
-    @JsonBackReference
-    private Quote quote;
+    @Column(name = "quote_id", nullable = false)
+    private Long quoteId;
 
-    @Column(name = "campaign_name", nullable = false, length = 255)
+    @Column(name = "campaign_name")
     private String campaignName;
 
-    @Column(name = "campaign_type", length = 100)
-    private String campaignType; // Email, SMS, Social
-
     @Column(name = "start_date")
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date")
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
-    @Column(name = "created_by")
-    private Long createdBy;
+    @Column(name = "status")
+    private String status = "ACTIVE";
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", length = 50)
-    private CampaignStatus status;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-	public Long getCampaignId() {
-		return campaignId;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "quote_id", insertable = false, updatable = false)
+    private Quote quote;
 
-	public void setCampaignId(Long campaignId) {
-		this.campaignId = campaignId;
-	}
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 
-	public Quote getQuote() {
-		return quote;
-	}
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-	public void setQuote(Quote quote) {
-		this.quote = quote;
-	}
+    public Long getQuoteId() { return quoteId; }
+    public void setQuoteId(Long quoteId) { this.quoteId = quoteId; }
 
-	public String getCampaignName() {
-		return campaignName;
-	}
+    public String getCampaignName() { return campaignName; }
+    public void setCampaignName(String campaignName) { this.campaignName = campaignName; }
 
-	public void setCampaignName(String campaignName) {
-		this.campaignName = campaignName;
-	}
+    public LocalDate getStartDate() { return startDate; }
+    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
 
-	public String getCampaignType() {
-		return campaignType;
-	}
+    public LocalDate getEndDate() { return endDate; }
+    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
 
-	public void setCampaignType(String campaignType) {
-		this.campaignType = campaignType;
-	}
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-	public LocalDateTime getStartDate() {
-		return startDate;
-	}
+    // Additional methods for compatibility
+    public Long getCampaignId() { return id; }
+    public void setCampaignId(Long id) { this.id = id; }
 
-	public void setStartDate(LocalDateTime startDate) {
-		this.startDate = startDate;
-	}
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-	public LocalDateTime getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(LocalDateTime endDate) {
-		this.endDate = endDate;
-	}
-
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public CampaignStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(CampaignStatus status) {
-		this.status = status;
-	}
-
-    
+    public Quote getQuote() { return quote; }
+    public void setQuote(Quote quote) { this.quote = quote; if (quote != null) this.quoteId = quote.getId(); }
 }

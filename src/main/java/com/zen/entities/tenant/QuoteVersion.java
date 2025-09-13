@@ -1,7 +1,7 @@
 package com.zen.entities.tenant;
 
-import java.time.LocalDateTime;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "quote_versions")
@@ -9,15 +9,17 @@ public class QuoteVersion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "version_id")
-    private Long versionId;
+    private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quote_id")
     private Quote quote;
 
     @Column(name = "version_number")
-    private Integer versionNumber;
+    private String versionNumber;
+
+    @Column(name = "notes")
+    private String notes;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -25,44 +27,27 @@ public class QuoteVersion {
     @Column(name = "created_by")
     private Long createdBy;
 
-    @Column(name = "notes")
-    private String notes;
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 
     // Getters and Setters
-    public Long getVersionId() {
-        return versionId;
-    }
-    public void setVersionId(Long versionId) {
-        this.versionId = versionId;
-    }
-    public Quote getQuote() {
-        return quote;
-    }
-    public void setQuote(Quote quote) {
-        this.quote = quote;
-    }
-    public Integer getVersionNumber() {
-        return versionNumber;
-    }
-    public void setVersionNumber(Integer versionNumber) {
-        this.versionNumber = versionNumber;
-    }
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-    public Long getCreatedBy() {
-        return createdBy;
-    }
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
-    }
-    public String getNotes() {
-        return notes;
-    }
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Quote getQuote() { return quote; }
+    public void setQuote(Quote quote) { this.quote = quote; }
+
+    public String getVersionNumber() { return versionNumber; }
+    public void setVersionNumber(String versionNumber) { this.versionNumber = versionNumber; }
+
+    public String getNotes() { return notes; }
+    public void setNotes(String notes) { this.notes = notes; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public Long getCreatedBy() { return createdBy; }
+    public void setCreatedBy(Long createdBy) { this.createdBy = createdBy; }
 }
