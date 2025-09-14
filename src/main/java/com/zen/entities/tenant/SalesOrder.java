@@ -1,6 +1,8 @@
 package com.zen.entities.tenant;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,6 +118,19 @@ public class SalesOrder extends DocumentBase {
 
     @Column(name = "rejected_reason", length = 1000)
     private String rejectedReason;
+
+    // Analytics timestamps
+    @Column(name = "order_placed_at")
+    private Instant orderPlacedAt;
+    
+    @Column(name = "status_changed_at")
+    private Instant statusChangedAt;
+    
+    @Column(name = "expected_delivery_time")
+    private ZonedDateTime expectedDeliveryTime;
+    
+    @Column(name = "actual_delivery_time")
+    private ZonedDateTime actualDeliveryTime;
 
     // ---- Helper methods ----
     public void addItem(SalesOrderItem item) {
@@ -242,4 +257,16 @@ public class SalesOrder extends DocumentBase {
 
     public String getRejectedReason() { return rejectedReason; }
     public void setRejectedReason(String rejectedReason) { this.rejectedReason = rejectedReason; }
+
+    public Instant getOrderPlacedAt() { return orderPlacedAt; }
+    public void setOrderPlacedAt(Instant orderPlacedAt) { this.orderPlacedAt = orderPlacedAt; }
+
+    public Instant getStatusChangedAt() { return statusChangedAt; }
+    public void setStatusChangedAt(Instant statusChangedAt) { this.statusChangedAt = statusChangedAt; }
+
+    public ZonedDateTime getExpectedDeliveryTime() { return expectedDeliveryTime; }
+    public void setExpectedDeliveryTime(ZonedDateTime expectedDeliveryTime) { this.expectedDeliveryTime = expectedDeliveryTime; }
+
+    public ZonedDateTime getActualDeliveryTime() { return actualDeliveryTime; }
+    public void setActualDeliveryTime(ZonedDateTime actualDeliveryTime) { this.actualDeliveryTime = actualDeliveryTime; }
 }
