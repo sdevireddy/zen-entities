@@ -1,17 +1,22 @@
 package com.zen.entities.tenant;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.*;
+import com.zen.entities.tenant.enums.PurchaseOrderStatus;
 
 @Entity
 @Table(name = "purchase_orders")
 @AttributeOverrides({
     @AttributeOverride(name = "id", column = @Column(name = "purchase_order_id")),
-    @AttributeOverride(name = "documentNumber", column = @Column(name = "po_number")),
-    @AttributeOverride(name = "ownerId", column = @Column(name = "owner_user_id"))
+    @AttributeOverride(name = "documentNumber", column = @Column(name = "document_number")),
+    @AttributeOverride(name = "expiryDate", column = @Column(name = "expiry_date")),
+    @AttributeOverride(name = "ownerId", column = @Column(name = "owner_user_id")),
+    @AttributeOverride(name = "status", column = @Column(name = "po_status", insertable = false, updatable = false))
 })
 public class PurchaseOrder extends DocumentBase {
     
@@ -19,24 +24,64 @@ public class PurchaseOrder extends DocumentBase {
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
     
-    @Column(name = "expected_delivery_date")
-    private LocalDate expectedDeliveryDate;
-    
-    @Column(name = "currency_code", length = 3)
+    @Column(name = "currency_code", length = 3, nullable = false)
     private String currencyCode = "USD";
     
-    @Column(name = "subtotal", precision = 15, scale = 2)
-    private BigDecimal subtotal = BigDecimal.ZERO;
-    
-    @Column(name = "tax_total", precision = 15, scale = 2)
-    private BigDecimal taxTotal = BigDecimal.ZERO;
-    
-    @Column(name = "grand_total", precision = 15, scale = 2)
-    private BigDecimal grandTotal = BigDecimal.ZERO;
-    
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private com.zen.entities.tenant.enums.DocumentStatus status = com.zen.entities.tenant.enums.DocumentStatus.DRAFT;
+    @Column(name = "po_status", length = 50, nullable = false)
+    private PurchaseOrderStatus poStatus = PurchaseOrderStatus.DRAFT;
+    
+    // Financial fields
+    @Column(name = "subtotal_amount", precision = 15, scale = 2)
+    private BigDecimal subtotal;
+    
+    @Column(name = "discount_value", precision = 15, scale = 2)
+    private BigDecimal discountTotal;
+    
+    @Column(name = "tax_total_amount", precision = 15, scale = 2)
+    private BigDecimal taxTotal;
+    
+    @Column(name = "shipping_amount", precision = 15, scale = 2)
+    private BigDecimal shippingCharges;
+    
+    @Column(name = "adjustment_amount", precision = 15, scale = 2)
+    private BigDecimal adjustment;
+    
+    @Column(name = "grand_total_amount", precision = 15, scale = 2)
+    private BigDecimal grandTotal;
+    
+    // Using inherited status field from DocumentBase mapped to po_status column
+    
+    @Column(name = "promo_code")
+    private String promoCode;
+    
+    @Column(name = "is_recurring")
+    private Boolean isRecurring = false;
+    
+    @Column(name = "external_system_id", length = 100)
+    private String externalSystemId;
+    
+    @Column(name = "related_invoice_id")
+    private Long relatedInvoiceId;
+    
+    @Column(name = "related_sales_order_id")
+    private Long relatedSalesOrderId;
+    
+    @Column(name = "rejected_reason", length = 1000)
+    private String rejectedReason;
+    
+    // Analytics timestamps
+    @Column(name = "order_placed_at")
+    private Instant orderPlacedAt;
+    
+    @Column(name = "status_changed_at")
+    private Instant statusChangedAt;
+    
+    @Column(name = "expected_delivery_time")
+    private ZonedDateTime expectedDeliveryTime;
+    
+    @Column(name = "actual_delivery_time")
+    private ZonedDateTime actualDeliveryTime;
     
     @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PurchaseOrderItem> items = new ArrayList<>();
@@ -45,24 +90,78 @@ public class PurchaseOrder extends DocumentBase {
     public Vendor getVendor() { return vendor; }
     public void setVendor(Vendor vendor) { this.vendor = vendor; }
     
-    public LocalDate getExpectedDeliveryDate() { return expectedDeliveryDate; }
-    public void setExpectedDeliveryDate(LocalDate expectedDeliveryDate) { this.expectedDeliveryDate = expectedDeliveryDate; }
-    
     public String getCurrencyCode() { return currencyCode; }
     public void setCurrencyCode(String currencyCode) { this.currencyCode = currencyCode; }
     
-    public List<PurchaseOrderItem> getItems() { return items; }
-    public void setItems(List<PurchaseOrderItem> items) { this.items = items; }
+    public PurchaseOrderStatus getPoStatus() { return poStatus; }
+    public void setPoStatus(PurchaseOrderStatus poStatus) { this.poStatus = poStatus; }
     
     public BigDecimal getSubtotal() { return subtotal; }
     public void setSubtotal(BigDecimal subtotal) { this.subtotal = subtotal; }
     
+    public BigDecimal getDiscountTotal() { return discountTotal; }
+    public void setDiscountTotal(BigDecimal discountTotal) { this.discountTotal = discountTotal; }
+    
     public BigDecimal getTaxTotal() { return taxTotal; }
     public void setTaxTotal(BigDecimal taxTotal) { this.taxTotal = taxTotal; }
+    
+    public BigDecimal getShippingCharges() { return shippingCharges; }
+    public void setShippingCharges(BigDecimal shippingCharges) { this.shippingCharges = shippingCharges; }
+    
+    public BigDecimal getAdjustment() { return adjustment; }
+    public void setAdjustment(BigDecimal adjustment) { this.adjustment = adjustment; }
     
     public BigDecimal getGrandTotal() { return grandTotal; }
     public void setGrandTotal(BigDecimal grandTotal) { this.grandTotal = grandTotal; }
     
-    public com.zen.entities.tenant.enums.DocumentStatus getStatus() { return status; }
-    public void setStatus(com.zen.entities.tenant.enums.DocumentStatus status) { this.status = status; }
+    public List<PurchaseOrderItem> getItems() { return items; }
+    public void setItems(List<PurchaseOrderItem> items) { this.items = items; }
+    
+
+    
+    // Use inherited getStatus/setStatus methods from DocumentBase
+    
+    public String getPromoCode() { return promoCode; }
+    public void setPromoCode(String promoCode) { this.promoCode = promoCode; }
+    
+    public Boolean getIsRecurring() { return isRecurring; }
+    public void setIsRecurring(Boolean isRecurring) { this.isRecurring = isRecurring; }
+    
+    public String getExternalSystemId() { return externalSystemId; }
+    public void setExternalSystemId(String externalSystemId) { this.externalSystemId = externalSystemId; }
+    
+    public Long getRelatedInvoiceId() { return relatedInvoiceId; }
+    public void setRelatedInvoiceId(Long relatedInvoiceId) { this.relatedInvoiceId = relatedInvoiceId; }
+    
+    public Long getRelatedSalesOrderId() { return relatedSalesOrderId; }
+    public void setRelatedSalesOrderId(Long relatedSalesOrderId) { this.relatedSalesOrderId = relatedSalesOrderId; }
+    
+    public String getRejectedReason() { return rejectedReason; }
+    public void setRejectedReason(String rejectedReason) { this.rejectedReason = rejectedReason; }
+    
+    public Instant getOrderPlacedAt() { return orderPlacedAt; }
+    public void setOrderPlacedAt(Instant orderPlacedAt) { this.orderPlacedAt = orderPlacedAt; }
+    
+    public Instant getStatusChangedAt() { return statusChangedAt; }
+    public void setStatusChangedAt(Instant statusChangedAt) { this.statusChangedAt = statusChangedAt; }
+    
+    public ZonedDateTime getExpectedDeliveryTime() { return expectedDeliveryTime; }
+    public void setExpectedDeliveryTime(ZonedDateTime expectedDeliveryTime) { this.expectedDeliveryTime = expectedDeliveryTime; }
+    
+    public ZonedDateTime getActualDeliveryTime() { return actualDeliveryTime; }
+    public void setActualDeliveryTime(ZonedDateTime actualDeliveryTime) { this.actualDeliveryTime = actualDeliveryTime; }
+    
+    // Helper methods
+    public String getOrderNumber() { return getDocumentNumber(); }
+    public void setOrderNumber(String orderNumber) { setDocumentNumber(orderNumber); }
+    
+    public void addItem(PurchaseOrderItem item) {
+        items.add(item);
+        item.setPurchaseOrder(this);
+    }
+    
+    public void removeItem(PurchaseOrderItem item) {
+        items.remove(item);
+        item.setPurchaseOrder(null);
+    }
 }

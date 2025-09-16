@@ -42,16 +42,17 @@ public class LeadNote {
 		this.note = note;
 	}
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
 	public ZenUser getCreatedBy() {
 		return createdBy;
 	}
 	public void setCreatedBy(ZenUser createdBy) {
 		this.createdBy = createdBy;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 }
