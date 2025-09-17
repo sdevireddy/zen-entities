@@ -28,7 +28,7 @@ public class TenantModule {
 		this.name = name;
 	}
 	
-	public TenantModule(String moduleKey, String name,String descripton) {
+	public TenantModule(String moduleKey, String name, String description) {
 		this.moduleKey = moduleKey;
 		this.name = name;
 		this.description = description;

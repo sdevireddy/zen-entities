@@ -1,18 +1,25 @@
 package com.zen.entities.tenant;
 
 import com.zen.entities.tenant.ZenUser;
+import com.zen.entities.tenant.enums.ServiceContext;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zen.entities.common.Roles;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +28,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapKeyColumn;
+import jakarta.persistence.MapKeyEnumerated;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -110,6 +119,8 @@ public class ZenUser {
 
 	@Column(name = "firstlogin")
 	private boolean firstLogin = true;
+
+	// Service contexts now resolved dynamically - no database storage needed
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
@@ -405,4 +416,6 @@ public class ZenUser {
 	public void setRecordPermissions(Set<TenantRecordPermission> recordPermissions) {
 		this.recordPermissions = recordPermissions;
 	}
+
+	// Service context getters/setters removed - now resolved dynamically
 }
