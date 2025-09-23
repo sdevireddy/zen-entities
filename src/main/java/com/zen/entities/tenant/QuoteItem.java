@@ -9,6 +9,7 @@ public class QuoteItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "item_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

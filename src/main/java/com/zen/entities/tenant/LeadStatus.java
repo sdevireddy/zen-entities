@@ -14,5 +14,6 @@ public enum LeadStatus {
     CLOSED,
     REJECTED,
     FOLLOW_UP,
-    NURTURING
+    NURTURING,
+    DELETED
 }

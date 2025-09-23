@@ -93,6 +93,13 @@ public class Quote {
     @Column(name = "actual_close_date")
     private LocalDateTime actualCloseDate;
 
+
+
+
+
+    @Column(name = "currency_code")
+    private String currencyCode;
+
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 
@@ -223,6 +230,13 @@ public class Quote {
 
     public LocalDateTime getActualCloseDate() { return actualCloseDate; }
     public void setActualCloseDate(LocalDateTime actualCloseDate) { this.actualCloseDate = actualCloseDate; }
+
+
+
+
+
+    public String getCurrencyCode() { return currencyCode; }
+    public void setCurrencyCode(String currencyCode) { this.currencyCode = currencyCode; }
 
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }

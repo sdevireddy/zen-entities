@@ -24,6 +24,15 @@ public class QuoteAttachment {
     @Column(name = "file_url")
     private String fileUrl;
 
+    @Column(name = "file_path")
+    private String filePath;
+
+    @Column(name = "file_size")
+    private Long fileSize;
+
+    @Column(name = "content_type")
+    private String contentType;
+
     @Column(name = "uploaded_by")
     private String uploadedBy;
 
@@ -50,6 +59,15 @@ public class QuoteAttachment {
 
     public String getFileUrl() { return fileUrl; }
     public void setFileUrl(String fileUrl) { this.fileUrl = fileUrl; }
+
+    public String getFilePath() { return filePath; }
+    public void setFilePath(String filePath) { this.filePath = filePath; }
+
+    public Long getFileSize() { return fileSize; }
+    public void setFileSize(Long fileSize) { this.fileSize = fileSize; }
+
+    public String getContentType() { return contentType; }
+    public void setContentType(String contentType) { this.contentType = contentType; }
 
     public String getUploadedBy() { return uploadedBy; }
     public void setUploadedBy(String uploadedBy) { this.uploadedBy = uploadedBy; }
