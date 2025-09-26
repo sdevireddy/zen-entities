@@ -230,6 +230,21 @@ public class SalesOrder extends DocumentBase {
     public String getExternalSystemId() { return externalSystemId; }
     public void setExternalSystemId(String externalSystemId) { this.externalSystemId = externalSystemId; }
 
+    // Industry-standard accountId methods
+    public Long getAccountId() {
+        return customer != null ? customer.getId() : null;
+    }
+    
+    public void setAccountId(Long accountId) {
+        if (accountId != null) {
+            Account account = new Account();
+            account.setId(accountId);
+            this.customer = account;
+        } else {
+            this.customer = null;
+        }
+    }
+
     public Long getRelatedInvoiceId() { return relatedInvoiceId; }
     public void setRelatedInvoiceId(Long relatedInvoiceId) { this.relatedInvoiceId = relatedInvoiceId; }
 
@@ -253,7 +268,6 @@ public class SalesOrder extends DocumentBase {
 
     public List<Attachment> getAttachments() { return attachments; }
     public void setAttachments(List<Attachment> attachments) { this.attachments = attachments; }
-
 
     public String getRejectedReason() { return rejectedReason; }
     public void setRejectedReason(String rejectedReason) { this.rejectedReason = rejectedReason; }

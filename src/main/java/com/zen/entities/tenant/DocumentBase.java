@@ -25,7 +25,7 @@ public abstract class DocumentBase {
     @Column(name="document_number")
     protected String documentNumber;
     @Column(name="document_date")
-    protected LocalDate documentDate;
+    protected LocalDateTime documentDate;
     
     @Column(name = "title")
     protected String title;
@@ -84,10 +84,10 @@ public abstract class DocumentBase {
 	public void setDocumentNumber(String documentNumber) {
 		this.documentNumber = documentNumber;
 	}
-	public LocalDate getDocumentDate() {
+	public LocalDateTime getDocumentDate() {
 		return documentDate;
 	}
-	public void setDocumentDate(LocalDate documentDate) {
+	public void setDocumentDate(LocalDateTime documentDate) {
 		this.documentDate = documentDate;
 	}
 	public LocalDate getExpiryDate() {

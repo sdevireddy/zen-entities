@@ -2,6 +2,7 @@ package com.zen.entities.tenant;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import com.zen.entities.common.DocumentStatus;
 
@@ -106,7 +107,7 @@ public class Quote {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "quoteId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "quote", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<QuoteCampaign> campaigns;
 
     @OneToMany(mappedBy = "quote", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)

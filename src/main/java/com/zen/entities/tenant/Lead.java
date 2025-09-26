@@ -34,25 +34,33 @@ public class Lead {
     @JoinColumn(name = "lead_owner_id")
     private ZenUser leadOwner;
     private String company;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
     private String title;
     private String email;
     private String fax;
     private String mobile;
     private String website;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "lead_source")
     private LeadSource leadSource;
     @Enumerated(EnumType.STRING)
+    @Column(name = "lead_status")
     private LeadStatus leadStatus;
     private String industry;
+    @Column(name = "no_of_employees")
     private Integer noOfEmployees;
+    @Column(name = "annual_revenue")
     private Double annualRevenue;
     private String rating;
     @Column(name = "email_opt_out")
     private Boolean emailOptOut = false;
 
+    @Column(name = "skype_id")
     private String skypeId;
+    @Column(name = "secondary_email")
     private String secondaryEmail;
     private String twitter;
     private String description;
