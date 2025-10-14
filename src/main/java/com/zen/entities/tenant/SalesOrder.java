@@ -62,8 +62,11 @@ public class SalesOrder extends DocumentBase {
     private BigDecimal grandTotal;
 
     // ---- CRM / External Links ----
+    @Column(name = "customer_id")
+    private Long customerId;
+    
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
     private Account customer;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -232,7 +235,15 @@ public class SalesOrder extends DocumentBase {
 
     // Industry-standard accountId methods
     public Long getAccountId() {
-        return customer != null ? customer.getId() : null;
+        return customerId;
+    }
+    
+    public Long getCustomerId() {
+        return customerId;
+    }
+    
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
     
     public void setAccountId(Long accountId) {

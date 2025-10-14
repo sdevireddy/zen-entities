@@ -32,7 +32,7 @@ public abstract class DocumentBase {
     
     
     @Column(name = "valid_until")
-    protected LocalDate expiryDate;
+    protected LocalDateTime expiryDate;
 
     @Enumerated(EnumType.STRING)
     protected DocumentStatus status;
@@ -90,10 +90,10 @@ public abstract class DocumentBase {
 	public void setDocumentDate(LocalDateTime documentDate) {
 		this.documentDate = documentDate;
 	}
-	public LocalDate getExpiryDate() {
+	public LocalDateTime getExpiryDate() {
 		return expiryDate;
 	}
-	public void setExpiryDate(LocalDate expiryDate) {
+	public void setExpiryDate(LocalDateTime expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 	public DocumentStatus getStatus() {
