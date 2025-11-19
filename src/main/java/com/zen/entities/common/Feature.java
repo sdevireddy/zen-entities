@@ -26,6 +26,8 @@ public class Feature {
     private String name;
     
     private String description;
+    
+    private String featureCategory;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "module_id")
@@ -79,6 +81,14 @@ public class Feature {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public String getFeatureCategory() {
+		return featureCategory;
+	}
+	
+	public void setFeatureCategory(String featureCategory) {
+		this.featureCategory = featureCategory;
 	}
     
 }

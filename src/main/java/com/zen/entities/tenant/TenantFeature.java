@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +30,11 @@ public class TenantFeature {
 	private String description;
 
 	private boolean enabled = true;
+
+	@Column(name = "functional_category")
+	private String functionalCategory = "General Features";
+
+
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "module_id")
@@ -97,5 +103,15 @@ public class TenantFeature {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+
+	public String getFunctionalCategory() {
+		return functionalCategory;
+	}
+
+	public void setFunctionalCategory(String functionalCategory) {
+		this.functionalCategory = functionalCategory;
+	}
+
+
 
 }
