@@ -17,6 +17,8 @@ public class TenantRoles {
 
     private String name;
 
+    private String description;
+
     @Column(name = "is_default")
     private boolean isDefault;
 
@@ -130,6 +132,10 @@ public class TenantRoles {
     }
 
 	public String getDescription() {
-		return "Descripiton";
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

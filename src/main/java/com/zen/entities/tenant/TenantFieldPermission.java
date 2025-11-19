@@ -11,7 +11,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tenant_field_permission")
+@Table(name = "tenant_field_permissions")
 
 public class TenantFieldPermission {
 	@Id

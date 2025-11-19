@@ -28,6 +28,8 @@ public class TenantFeature {
 
 	private String description;
 
+	private boolean enabled = true;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "module_id")
 	private TenantModule module;
@@ -86,6 +88,14 @@ public class TenantFeature {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 }

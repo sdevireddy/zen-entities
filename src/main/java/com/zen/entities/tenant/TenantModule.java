@@ -16,6 +16,7 @@ public class TenantModule {
 	private String moduleKey;
 	private String name;
 	private String description;
+	private boolean enabled = true;
 
 	@OneToMany(mappedBy = "module", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<TenantFeature> features = new HashSet<>();
@@ -68,5 +69,13 @@ public class TenantModule {
 
 	public void setFeatures(Set<TenantFeature> features) {
 		this.features = features;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 }
