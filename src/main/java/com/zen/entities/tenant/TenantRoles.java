@@ -22,6 +22,12 @@ public class TenantRoles {
     @Column(name = "is_default")
     private boolean isDefault;
 
+    @Column(name = "is_active")
+    private Boolean isActive = true;
+
+    @Column(name = "created_at")
+    private java.time.LocalDateTime createdAt;
+
     /** 🔹 Role -> Permission mapping */
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -137,5 +143,21 @@ public class TenantRoles {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public java.time.LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(java.time.LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 }

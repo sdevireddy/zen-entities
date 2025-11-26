@@ -123,9 +123,9 @@ public class Roles {
         this.isDefault = isDefault;
     }
 
-	public Object getDescription() {
+	public String getDescription() {
 		// TODO Auto-generated method stub
-		return null;
+		return "default descripion";
 	}
 	
 }

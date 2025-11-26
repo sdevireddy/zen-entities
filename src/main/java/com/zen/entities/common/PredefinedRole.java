@@ -18,7 +18,8 @@ public class PredefinedRole {
     private String description;
     
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "predefined_permissions")
+    @CollectionTable(name = "predefined_permissions", 
+                     joinColumns = @JoinColumn(name = "predefined_role_id"))
     @Column(name = "permission")
     private Set<String> permissions = new HashSet<>();
     
