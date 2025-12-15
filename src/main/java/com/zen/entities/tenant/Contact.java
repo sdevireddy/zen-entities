@@ -56,6 +56,9 @@ public class Contact {
     @Column(name = "vendor_name", length = 150)
     private String vendorName;
 
+    @Column(name = "company", length = 150)
+    private String company;
+
     @Column(name = "email", length = 150)
     private String email;
 
@@ -185,6 +188,14 @@ public class Contact {
 
 	public void setVendorName(String vendorName) {
 		this.vendorName = vendorName;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
 	public String getEmail() {

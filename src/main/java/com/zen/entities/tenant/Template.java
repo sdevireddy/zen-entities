@@ -110,6 +110,13 @@ public class Template {
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
     
     public enum TemplateType {
-        quote, invoice, purchase_order, sales_order, email, sms, social_media
+        QUOTE, 
+        INVOICE, 
+        PURCHASE_ORDER, 
+        SALES_ORDER, 
+        EMAIL, 
+        SMS, 
+        WHATSAPP,
+        SOCIAL_MEDIA
     }
 }

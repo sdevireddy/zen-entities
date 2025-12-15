@@ -2,6 +2,7 @@ package com.zen.entities.tenant;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,10 @@ public class SalesOrder extends DocumentBase {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", insertable = false, updatable = false)
     private Account customer;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contact_id")
+    private Contact contact;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "billing_address_id")
@@ -211,6 +216,18 @@ public class SalesOrder extends DocumentBase {
 
     public Account getCustomer() { return customer; }
     public void setCustomer(Account customer) { this.customer = customer; }
+    
+    public Account getAccount() { return customer; }
+    public void setAccount(Account account) { this.customer = account; }
+    
+    public Contact getContact() { return contact; }
+    public void setContact(Contact contact) { this.contact = contact; }
+    
+    public BigDecimal getTotalAmount() { return grandTotal; }
+    public void setTotalAmount(BigDecimal totalAmount) { this.grandTotal = totalAmount; }
+    
+    public LocalDateTime getOrderDate() { return getDocumentDate(); }
+    public void setOrderDate(LocalDateTime orderDate) { setDocumentDate(orderDate); }
     
     public Address getBillingAddress() { return billingAddress; }
     public void setBillingAddress(Address billingAddress) { this.billingAddress = billingAddress; }

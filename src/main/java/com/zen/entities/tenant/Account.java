@@ -78,6 +78,12 @@ public class Account {
     private String phone;
     private String fax;
     private String website;
+    
+    @Column(name = "email")
+    private String email;
+    
+    @Column(name = "number_of_employees")
+    private Integer numberOfEmployees;
 
     @Column(name = "ticker_symbol")
     private String tickerSymbol;
@@ -328,7 +334,21 @@ public class Account {
             child.setParentAccount(null);
         }
     }
-
-
+    
+    public String getEmail() {
+        return email;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public Integer getNumberOfEmployees() {
+        return numberOfEmployees;
+    }
+    
+    public void setNumberOfEmployees(Integer numberOfEmployees) {
+        this.numberOfEmployees = numberOfEmployees;
+    }
 
 }

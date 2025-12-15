@@ -48,6 +48,9 @@ public class Deal {
     @Column(name= "closing_date")
     private LocalDateTime closingDate;
 
+    @Column(name= "expected_close_date")
+    private LocalDateTime expectedCloseDate;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contact_id", foreignKey = @ForeignKey(name = "fk_deal_contact"))
     private Contact contact;
@@ -122,6 +125,14 @@ public class Deal {
 
 	public void setClosingDate(LocalDateTime closingDate) {
 		this.closingDate = closingDate;
+	}
+
+	public LocalDateTime getExpectedCloseDate() {
+		return expectedCloseDate;
+	}
+
+	public void setExpectedCloseDate(LocalDateTime expectedCloseDate) {
+		this.expectedCloseDate = expectedCloseDate;
 	}
 
 	public Contact getContact() {

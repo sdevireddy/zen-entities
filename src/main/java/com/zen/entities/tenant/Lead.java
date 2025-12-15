@@ -40,6 +40,7 @@ public class Lead {
     private String lastName;
     private String title;
     private String email;
+    private String phone;
     private String fax;
     private String mobile;
     private String website;
@@ -145,6 +146,12 @@ public class Lead {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	public String getFax() {
 		return fax;
 	}
@@ -174,6 +181,12 @@ public class Lead {
 		return leadStatus;
 	}
 	public void setLeadStatus(LeadStatus status) {
+		this.leadStatus = status;
+	}
+	public LeadStatus getStatus() {
+		return leadStatus;
+	}
+	public void setStatus(LeadStatus status) {
 		this.leadStatus = status;
 	}
 	public String getIndustry() {

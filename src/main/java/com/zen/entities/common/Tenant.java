@@ -1,7 +1,16 @@
 package com.zen.entities.common;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "tenants",
@@ -38,6 +47,15 @@ public class Tenant {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column(name = "tenant_status")
+    private String tenantStatus;
+
+    @Column(name = "email_verified")
+    private Boolean emailVerified;
+
+    @Column(name = "created_by_ip")
+    private String createdByIp;
 
     @PrePersist
     protected void onCreate() {
@@ -120,6 +138,30 @@ public class Tenant {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public String getTenantStatus() {
+		return tenantStatus;
+	}
+
+	public void setTenantStatus(String tenantStatus) {
+		this.tenantStatus = tenantStatus;
+	}
+
+	public Boolean getEmailVerified() {
+		return emailVerified;
+	}
+
+	public void setEmailVerified(Boolean emailVerified) {
+		this.emailVerified = emailVerified;
+	}
+
+	public String getCreatedByIp() {
+		return createdByIp;
+	}
+
+	public void setCreatedByIp(String createdByIp) {
+		this.createdByIp = createdByIp;
 	}
 
 }
