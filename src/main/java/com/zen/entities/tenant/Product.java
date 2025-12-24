@@ -2,7 +2,16 @@ package com.zen.entities.tenant;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "products", indexes = {
@@ -24,10 +33,10 @@ public class Product {
     
     private String description;
     
-    @Column(name = "unit_price", precision = 15, scale = 2)
+    @Column(name = "unit_price", columnDefinition = "DECIMAL(15,2)")
     private BigDecimal unitPrice;
     
-    @Column(name = "cost_price", precision = 15, scale = 2)
+    @Column(name = "cost_price", columnDefinition = "DECIMAL(15,2)")
     private BigDecimal costPrice;
     
     @Enumerated(EnumType.STRING)
@@ -42,7 +51,7 @@ public class Product {
     private String category;
     private String brand;
     
-    @Column(name = "tax_rate", precision = 5, scale = 2)
+    @Column(name = "tax_rate", columnDefinition = "DECIMAL(5,2)")
     private BigDecimal taxRate;
     
     @Column(name = "created_at")

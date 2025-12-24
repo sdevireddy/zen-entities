@@ -50,28 +50,28 @@ public class KeywordPerformance {
     @Column(name = "clicks")
     private Long clicks = 0L;
     
-    @Column(name = "cost", precision = 10, scale = 2)
+    @Column(name = "cost", columnDefinition = "DECIMAL(10,2)")
     private BigDecimal cost = BigDecimal.ZERO;
     
     @Column(name = "conversions")
     private Long conversions = 0L;
     
-    @Column(name = "conversion_value", precision = 10, scale = 2)
+    @Column(name = "conversion_value", columnDefinition = "DECIMAL(10,2)")
     private BigDecimal conversionValue = BigDecimal.ZERO;
     
-    @Column(name = "ctr", precision = 5, scale = 4) // Click-through rate
+    @Column(name = "ctr", columnDefinition = "DECIMAL(5,4)") // Click-through rate
     private BigDecimal ctr = BigDecimal.ZERO;
     
-    @Column(name = "cpc", precision = 10, scale = 2) // Cost per click
+    @Column(name = "cpc", columnDefinition = "DECIMAL(10,2)") // Cost per click
     private BigDecimal cpc = BigDecimal.ZERO;
     
-    @Column(name = "cpa", precision = 10, scale = 2) // Cost per acquisition
+    @Column(name = "cpa", columnDefinition = "DECIMAL(10,2)") // Cost per acquisition
     private BigDecimal cpa = BigDecimal.ZERO;
     
     @Column(name = "quality_score")
     private Integer qualityScore;
     
-    @Column(name = "avg_position", precision = 3, scale = 1)
+    @Column(name = "avg_position", columnDefinition = "DECIMAL(3,1)")
     private BigDecimal avgPosition;
     
     @Column(name = "search_volume")

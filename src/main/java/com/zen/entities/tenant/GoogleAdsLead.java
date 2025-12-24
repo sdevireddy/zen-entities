@@ -76,10 +76,10 @@ public class GoogleAdsLead {
     @Column(name = "landing_page_url")
     private String landingPageUrl;
     
-    @Column(name = "cost_per_lead", precision = 10, scale = 2)
+    @Column(name = "cost_per_lead", columnDefinition = "DECIMAL(10,2)")
     private BigDecimal costPerLead;
     
-    @Column(name = "conversion_value", precision = 10, scale = 2)
+    @Column(name = "conversion_value", columnDefinition = "DECIMAL(10,2)")
     private BigDecimal conversionValue;
     
     @Column(name = "crm_lead_id")

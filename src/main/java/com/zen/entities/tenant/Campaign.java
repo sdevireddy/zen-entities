@@ -2,8 +2,15 @@ package com.zen.entities.tenant;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "campaigns")
@@ -33,13 +40,13 @@ public class Campaign {
     @Column(name = "end_date")
     private LocalDateTime endDate;
     
-    @Column(name = "budget", precision = 15, scale = 2)
+    @Column(name = "budget", columnDefinition = "DECIMAL(15,2)")
     private BigDecimal budget;
     
-    @Column(name = "actual_cost", precision = 15, scale = 2)
+    @Column(name = "actual_cost", columnDefinition = "DECIMAL(15,2)")
     private BigDecimal actualCost = BigDecimal.ZERO;
     
-    @Column(name = "expected_revenue", precision = 15, scale = 2)
+    @Column(name = "expected_revenue", columnDefinition = "DECIMAL(15,2)")
     private BigDecimal expectedRevenue;
     
     // Social Media Campaign Analytics

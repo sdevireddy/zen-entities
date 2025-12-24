@@ -67,13 +67,13 @@ public class MigrationStagingData {
     private String externalReferences;
 
     // Data quality metrics
-    @Column(name = "data_quality_score", precision = 5, scale = 2)
+    @Column(name = "data_quality_score", columnDefinition = "DECIMAL(5,2)")
     private BigDecimal dataQualityScore;
 
-    @Column(name = "completeness_score", precision = 5, scale = 2)
+    @Column(name = "completeness_score", columnDefinition = "DECIMAL(5,2)")
     private BigDecimal completenessScore;
 
-    @Column(name = "accuracy_score", precision = 5, scale = 2)
+    @Column(name = "accuracy_score", columnDefinition = "DECIMAL(5,2)")
     private BigDecimal accuracyScore;
 
     // Processing metadata

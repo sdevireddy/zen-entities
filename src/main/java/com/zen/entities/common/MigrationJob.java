@@ -98,7 +98,7 @@ public class MigrationJob {
     private Integer maxRetries = 3;
 
     // Performance metrics
-    @Column(name = "avg_records_per_second", precision = 10, scale = 2)
+    @Column(name = "avg_records_per_second", columnDefinition = "DECIMAL(10,2)")
     @Builder.Default
     private Double avgRecordsPerSecond = 0.0;
 

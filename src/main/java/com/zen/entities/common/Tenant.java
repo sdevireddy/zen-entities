@@ -1,16 +1,7 @@
 package com.zen.entities.common;
 
-import java.time.LocalDateTime;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import java.time.Instant;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tenants",
@@ -22,19 +13,19 @@ public class Tenant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // internal auto-increment ID
+    private Long id;
 
     @Column(name = "org_name", nullable = false)
-    private String orgName;  // Display name
+    private String orgName;
 
     @Column(name = "tenant_org_name", nullable = false)
-    private String tenantOrgName;  // sanitized org key (prefix)
+    private String tenantOrgName;
 
     @Column(name = "suffix", nullable = false, length = 8)
-    private String suffix; // 8-digit unique suffix
+    private String suffix;
 
     @Column(name = "schema_name", nullable = false, unique = true)
-    private String schemaName; // tenant schema: prefix_suffix
+    private String schemaName;
 
     @Column(name = "admin_username", nullable = false)
     private String adminUsername;
@@ -42,126 +33,103 @@ public class Tenant {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Column(name = "email_verified", nullable = false)
+    private Boolean emailVerified = false;
+
+    @Column(name = "verification_token")
+    private String verificationToken;
+
+    @Column(name = "email_verification_token_expires_at")
+    private Instant emailVerificationTokenExpiresAt;
+
+    @Column(name = "verification_attempts")
+    private Integer verificationAttempts = 0;
+
+    @Column(name = "verified_at")
+    private Instant verifiedAt;
+
+    @Column(name = "last_verification_attempt")
+    private Instant lastVerificationAttempt;
+
+    @Column(name = "status", length = 50)
+    private String status = "PENDING_VERIFICATION";
+
+    @Column(name = "created_by_ip", length = 50)
+    private String createdByIp;
+
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Instant updatedAt;
 
-    @Column(name = "tenant_status")
-    private String tenantStatus;
-
-    @Column(name = "email_verified")
-    private Boolean emailVerified;
-
-    @Column(name = "created_by_ip")
-    private String createdByIp;
+    // Constructors
+    public Tenant() {}
 
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = this.createdAt;
+        createdAt = Instant.now(); // UTC time
+        updatedAt = Instant.now(); // UTC time
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
+        updatedAt = Instant.now(); // UTC time
     }
 
-	public Long getId() {
-		return id;
-	}
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public String getOrgName() { return orgName; }
+    public void setOrgName(String orgName) { this.orgName = orgName; }
 
-	public String getOrgName() {
-		return orgName;
-	}
+    public String getTenantOrgName() { return tenantOrgName; }
+    public void setTenantOrgName(String tenantOrgName) { this.tenantOrgName = tenantOrgName; }
 
-	public void setOrgName(String orgName) {
-		this.orgName = orgName;
-	}
+    public String getSuffix() { return suffix; }
+    public void setSuffix(String suffix) { this.suffix = suffix; }
 
-	public String getTenantOrgName() {
-		return tenantOrgName;
-	}
+    public String getSchemaName() { return schemaName; }
+    public void setSchemaName(String schemaName) { this.schemaName = schemaName; }
 
-	public void setTenantOrgName(String tenantOrgName) {
-		this.tenantOrgName = tenantOrgName;
-	}
+    public String getAdminUsername() { return adminUsername; }
+    public void setAdminUsername(String adminUsername) { this.adminUsername = adminUsername; }
 
-	public String getSuffix() {
-		return suffix;
-	}
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-	public void setSuffix(String suffix) {
-		this.suffix = suffix;
-	}
+    public Boolean getEmailVerified() { return emailVerified; }
+    public void setEmailVerified(Boolean emailVerified) { this.emailVerified = emailVerified; }
 
-	public String getSchemaName() {
-		return schemaName;
-	}
+    public String getVerificationToken() { return verificationToken; }
+    public void setVerificationToken(String verificationToken) { this.verificationToken = verificationToken; }
 
-	public void setSchemaName(String schemaName) {
-		this.schemaName = schemaName;
-	}
+    public Instant getEmailVerificationTokenExpiresAt() { return emailVerificationTokenExpiresAt; }
+    public void setEmailVerificationTokenExpiresAt(Instant emailVerificationTokenExpiresAt) { 
+        this.emailVerificationTokenExpiresAt = emailVerificationTokenExpiresAt; 
+    }
 
-	public String getAdminUsername() {
-		return adminUsername;
-	}
+    public Integer getVerificationAttempts() { return verificationAttempts; }
+    public void setVerificationAttempts(Integer verificationAttempts) { this.verificationAttempts = verificationAttempts; }
 
-	public void setAdminUsername(String adminUsername) {
-		this.adminUsername = adminUsername;
-	}
+    public Instant getVerifiedAt() { return verifiedAt; }
+    public void setVerifiedAt(Instant verifiedAt) { this.verifiedAt = verifiedAt; }
 
-	public String getEmail() {
-		return email;
-	}
+    public Instant getLastVerificationAttempt() { return lastVerificationAttempt; }
+    public void setLastVerificationAttempt(Instant lastVerificationAttempt) { 
+        this.lastVerificationAttempt = lastVerificationAttempt; 
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
+    public String getCreatedByIp() { return createdByIp; }
+    public void setCreatedByIp(String createdByIp) { this.createdByIp = createdByIp; }
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
+    public Instant getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-	public String getTenantStatus() {
-		return tenantStatus;
-	}
-
-	public void setTenantStatus(String tenantStatus) {
-		this.tenantStatus = tenantStatus;
-	}
-
-	public Boolean getEmailVerified() {
-		return emailVerified;
-	}
-
-	public void setEmailVerified(Boolean emailVerified) {
-		this.emailVerified = emailVerified;
-	}
-
-	public String getCreatedByIp() {
-		return createdByIp;
-	}
-
-	public void setCreatedByIp(String createdByIp) {
-		this.createdByIp = createdByIp;
-	}
-
+    public Instant getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(Instant updatedAt) { this.updatedAt = updatedAt; }
 }
