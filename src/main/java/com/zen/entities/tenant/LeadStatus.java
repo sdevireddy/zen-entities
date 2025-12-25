@@ -15,5 +15,6 @@ public enum LeadStatus {
     REJECTED,
     FOLLOW_UP,
     NURTURING,
+    JUNK,
     DELETED
 }

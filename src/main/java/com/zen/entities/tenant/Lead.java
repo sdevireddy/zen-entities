@@ -44,7 +44,7 @@ public class Lead {
     private String fax;
     private String mobile;
     private String website;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "lead_source")
     private LeadSource leadSource;
     @Enumerated(EnumType.STRING)

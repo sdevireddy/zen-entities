@@ -1,19 +1,27 @@
 package com.zen.entities.tenant;
 
-import com.zen.entities.tenant.ZenUser;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.ToString;
 
 @Entity
 @Table(name = "deals", indexes = {@Index(name = "idx_deal_name", columnList = "dealName")})
@@ -45,7 +53,7 @@ public class Deal {
     @Column(precision = 15, scale = 2)
     private BigDecimal amount;
 
-    @Column(name= "closing_date")
+    @Column(name= "close_date")
     private LocalDateTime closingDate;
 
     @Column(name= "expected_close_date")
@@ -208,7 +216,7 @@ public class Deal {
 	}
 
 	@Enumerated(EnumType.STRING)
-    @Column(length = 20)
+    @Column(name = "deal_stage", length = 20)
     private Stage stage;
 
     private String qualification;
@@ -219,9 +227,6 @@ public class Deal {
     @Column(name = "expected_revenue", precision = 15, scale = 2)
     private BigDecimal expectedRevenue;
 
-    @Column(name = "campaign_source")  
-    private String campaignSource;
-
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -229,6 +234,10 @@ public class Deal {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    // Campaign source field - will be enabled after database columns are added
+    @Column(name = "campaign_source")
+    private String campaignSource;
 
     public enum DealType {
         NEW_BUSINESS, EXISTING_BUSINESS, RENEWAL, OTHER, NEW
