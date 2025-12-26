@@ -1,7 +1,5 @@
 package com.zen.entities.tenant;
 
-import com.zen.entities.tenant.ZenUser;
-
 import java.time.LocalDateTime;
 import java.util.HashSet;
 
@@ -32,7 +30,7 @@ public class Contact {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "contact_id")
+    @Column(name = "id")
     private Long contactId;
 
     @ManyToOne(fetch = FetchType.LAZY)
