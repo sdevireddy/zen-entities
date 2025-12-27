@@ -11,7 +11,7 @@ public abstract class DocumentItemBase {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "item_id")
+	@Column(name = "id")
 	protected Long id;
 
 	@Column(name = "product_id", insertable = false, updatable = false)

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "document_tasks")
-public class QuoteTask {
+public class PurchaseOrderTask {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,24 +13,17 @@ public class QuoteTask {
     private Long taskId;
 
     @Column(name = "document_type", insertable = false, updatable = false)
-    private String documentType = "QUOTE";
+    private String documentType = "PURCHASE_ORDER";
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id")
-    private Quote quote;
+    private PurchaseOrder purchaseOrder;
 
     @Column(name = "task_name")
     private String taskName;
 
     @Column(name = "task_description")
     private String taskDescription;
-    
-    // JPA expects these field names in queries
-    public String getTask_name() { return taskName; }
-    public void setTask_name(String taskName) { this.taskName = taskName; }
-    
-    public String getTask_description() { return taskDescription; }
-    public void setTask_description(String taskDescription) { this.taskDescription = taskDescription; }
 
     @Column(name = "due_date")
     private LocalDateTime dueDate;
@@ -53,8 +46,8 @@ public class QuoteTask {
     public Long getTaskId() { return taskId; }
     public void setTaskId(Long taskId) { this.taskId = taskId; }
 
-    public Quote getQuote() { return quote; }
-    public void setQuote(Quote quote) { this.quote = quote; }
+    public PurchaseOrder getPurchaseOrder() { return purchaseOrder; }
+    public void setPurchaseOrder(PurchaseOrder purchaseOrder) { this.purchaseOrder = purchaseOrder; }
 
     public String getTaskName() { return taskName; }
     public void setTaskName(String taskName) { this.taskName = taskName; }

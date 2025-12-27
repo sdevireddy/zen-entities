@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "tenants",
        uniqueConstraints = {
+           @UniqueConstraint(columnNames = {"tenant_org_name"}),
            @UniqueConstraint(columnNames = {"tenant_org_name", "suffix"}),
            @UniqueConstraint(columnNames = {"schema_name"})
        })

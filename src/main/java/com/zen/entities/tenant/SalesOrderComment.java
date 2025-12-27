@@ -5,18 +5,18 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "document_comments")
-public class QuoteComment {
+public class SalesOrderComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "document_type", insertable = false, updatable = false)
-    private String documentType = "QUOTE";
+    private String documentType = "SALES_ORDER";
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id")
-    private Quote quote;
+    private SalesOrder salesOrder;
 
     @Column(name = "comment_text")
     private String comment;
@@ -42,11 +42,14 @@ public class QuoteComment {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public Quote getQuote() { return quote; }
-    public void setQuote(Quote quote) { this.quote = quote; }
+    public SalesOrder getSalesOrder() { return salesOrder; }
+    public void setSalesOrder(SalesOrder salesOrder) { this.salesOrder = salesOrder; }
 
     public String getComment() { return comment; }
     public void setComment(String comment) { this.comment = comment; }
+
+    public String getCommentText() { return commentText; }
+    public void setCommentText(String commentText) { this.commentText = commentText; }
 
     public String getAuthor() { return author; }
     public void setAuthor(String author) { this.author = author; }
@@ -56,8 +59,4 @@ public class QuoteComment {
 
     public Long getCreatedBy() { return createdBy; }
     public void setCreatedBy(Long createdBy) { this.createdBy = createdBy; }
-
-    // Alias methods for compatibility
-    public Long getCommentId() { return id; }
-    public String getCommentText() { return comment; }
 }

@@ -1,103 +1,60 @@
 package com.zen.entities.tenant;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
+import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "quote_items")
-public class QuoteItem {
+@Table(name = "document_items")
+@Where(clause = "document_type = 'QUOTE'")
+public class QuoteItem extends DocumentItemBase {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "document_type", insertable = false, updatable = false)
+    private String documentType = "QUOTE";
+
+    @Column(name = "document_id")
+    private Long quoteId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "quote_id")
+    @JoinColumn(name = "document_id", insertable = false, updatable = false)
     private Quote quote;
 
-    @Column(name = "product_id")
-    private Long productId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
+    private Product product;
 
-    @Column(name = "product_code")
-    private String productCode;
+    @PrePersist
+    protected void onCreate() {
+        this.documentType = "QUOTE";
+        if (quote != null) {
+            this.quoteId = quote.getId();
+        }
+    }
 
-    @Column(name = "product_name")
-    private String productName;
-
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "quantity")
-    private Integer quantity;
-
-    @Column(name = "unit_price", precision = 10, scale = 2)
-    private BigDecimal unitPrice;
-
-    @Column(name = "discount_type")
-    private String discountType;
-
-    @Column(name = "discount_value", precision = 10, scale = 2)
-    private BigDecimal discountValue;
-
-    @Column(name = "tax_rate_pct", precision = 5, scale = 2)
-    private BigDecimal taxRatePct;
-
-    @Column(name = "line_subtotal", precision = 10, scale = 2)
-    private BigDecimal lineSubtotal;
-
-    @Column(name = "line_tax_total", precision = 10, scale = 2)
-    private BigDecimal lineTaxTotal;
-
-    @Column(name = "line_total", precision = 10, scale = 2)
-    private BigDecimal lineTotal;
-
-    @Column(name = "sort_order")
-    private Integer sortOrder;
+    @PreUpdate
+    protected void onUpdate() {
+        this.documentType = "QUOTE";
+        if (quote != null) {
+            this.quoteId = quote.getId();
+        }
+    }
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public String getDocumentType() { return documentType; }
+    public void setDocumentType(String documentType) { this.documentType = documentType; }
+
+    public Long getQuoteId() { return quoteId; }
+    public void setQuoteId(Long quoteId) { 
+        this.quoteId = quoteId;
+    }
 
     public Quote getQuote() { return quote; }
-    public void setQuote(Quote quote) { this.quote = quote; }
+    public void setQuote(Quote quote) { 
+        this.quote = quote;
+        if (quote != null) {
+            this.quoteId = quote.getId();
+        }
+    }
 
-    public Long getProductId() { return productId; }
-    public void setProductId(Long productId) { this.productId = productId; }
-
-    public String getProductCode() { return productCode; }
-    public void setProductCode(String productCode) { this.productCode = productCode; }
-
-    public String getProductName() { return productName; }
-    public void setProductName(String productName) { this.productName = productName; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public Integer getQuantity() { return quantity; }
-    public void setQuantity(Integer quantity) { this.quantity = quantity; }
-
-    public BigDecimal getUnitPrice() { return unitPrice; }
-    public void setUnitPrice(BigDecimal unitPrice) { this.unitPrice = unitPrice; }
-
-    public String getDiscountType() { return discountType; }
-    public void setDiscountType(String discountType) { this.discountType = discountType; }
-
-    public BigDecimal getDiscountValue() { return discountValue; }
-    public void setDiscountValue(BigDecimal discountValue) { this.discountValue = discountValue; }
-
-    public BigDecimal getTaxRatePct() { return taxRatePct; }
-    public void setTaxRatePct(BigDecimal taxRatePct) { this.taxRatePct = taxRatePct; }
-
-    public BigDecimal getLineSubtotal() { return lineSubtotal; }
-    public void setLineSubtotal(BigDecimal lineSubtotal) { this.lineSubtotal = lineSubtotal; }
-
-    public BigDecimal getLineTaxTotal() { return lineTaxTotal; }
-    public void setLineTaxTotal(BigDecimal lineTaxTotal) { this.lineTaxTotal = lineTaxTotal; }
-
-    public BigDecimal getLineTotal() { return lineTotal; }
-    public void setLineTotal(BigDecimal lineTotal) { this.lineTotal = lineTotal; }
-
-    public Integer getSortOrder() { return sortOrder; }
-    public void setSortOrder(Integer sortOrder) { this.sortOrder = sortOrder; }
+    public Product getProduct() { return product; }
+    public void setProduct(Product product) { this.product = product; }
 }

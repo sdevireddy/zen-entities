@@ -1,43 +1,66 @@
 package com.zen.entities.tenant;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "sales_order_items")
+@Table(name = "document_items")
+@Where(clause = "document_type = 'SALES_ORDER'")
 public class SalesOrderItem extends DocumentItemBase {
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "sales_order_id", nullable = false)
-	private SalesOrder salesOrder;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "product_id")
-	private Product product;
+    @Column(name = "document_type", insertable = false, updatable = false)
+    private String documentType = "SALES_ORDER";
 
-	@Column(name = "currency_code", length = 3)
-	private String currencyCode = "USD";
+    @Column(name = "document_id")
+    private Long salesOrderId;
 
-	public SalesOrder getSalesOrder() {
-		return salesOrder;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "document_id", insertable = false, updatable = false)
+    private SalesOrder salesOrder;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
+    private Product product;
 
-	public void setSalesOrder(SalesOrder salesOrder) {
-		this.salesOrder = salesOrder;
-	}
+    @Column(name = "currency_code", length = 3)
+    private String currencyCode = "USD";
 
-	public String getCurrencyCode() {
-		return currencyCode;
-	}
+    @PrePersist
+    protected void onCreate() {
+        this.documentType = "SALES_ORDER";
+        if (salesOrder != null) {
+            this.salesOrderId = salesOrder.getId();
+        }
+    }
 
-	public void setCurrencyCode(String currencyCode) {
-		this.currencyCode = currencyCode;
-	}
-	
-	public Product getProduct() {
-		return product;
-	}
+    @PreUpdate
+    protected void onUpdate() {
+        this.documentType = "SALES_ORDER";
+        if (salesOrder != null) {
+            this.salesOrderId = salesOrder.getId();
+        }
+    }
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+    // Getters and Setters
+    public String getDocumentType() { return documentType; }
+    public void setDocumentType(String documentType) { this.documentType = documentType; }
+
+    public Long getSalesOrderId() { return salesOrderId; }
+    public void setSalesOrderId(Long salesOrderId) { 
+        this.salesOrderId = salesOrderId;
+    }
+
+    public SalesOrder getSalesOrder() { return salesOrder; }
+    public void setSalesOrder(SalesOrder salesOrder) { 
+        this.salesOrder = salesOrder;
+        if (salesOrder != null) {
+            this.salesOrderId = salesOrder.getId();
+        }
+    }
+
+    public String getCurrencyCode() { return currencyCode; }
+    public void setCurrencyCode(String currencyCode) { this.currencyCode = currencyCode; }
+    
+    public Product getProduct() { return product; }
+    public void setProduct(Product product) { this.product = product; }
 }

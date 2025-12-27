@@ -5,18 +5,18 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "document_attachments")
-public class QuoteAttachment {
+public class InvoiceAttachment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "document_type", insertable = false, updatable = false)
-    private String documentType = "QUOTE";
+    private String documentType = "INVOICE";
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id")
-    private Quote quote;
+    private Invoice invoice;
 
     @Column(name = "file_name")
     private String fileName;
@@ -48,8 +48,8 @@ public class QuoteAttachment {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public Quote getQuote() { return quote; }
-    public void setQuote(Quote quote) { this.quote = quote; }
+    public Invoice getInvoice() { return invoice; }
+    public void setInvoice(Invoice invoice) { this.invoice = invoice; }
 
     public String getFileName() { return fileName; }
     public void setFileName(String fileName) { this.fileName = fileName; }
@@ -59,8 +59,6 @@ public class QuoteAttachment {
 
     public String getFileUrl() { return fileUrl; }
     public void setFileUrl(String fileUrl) { this.fileUrl = fileUrl; }
-
-
 
     public Long getFileSize() { return fileSize; }
     public void setFileSize(Long fileSize) { this.fileSize = fileSize; }
@@ -73,7 +71,4 @@ public class QuoteAttachment {
 
     public LocalDateTime getUploadedAt() { return uploadedAt; }
     public void setUploadedAt(LocalDateTime uploadedAt) { this.uploadedAt = uploadedAt; }
-
-    // Alias method for compatibility
-    public Long getAttachmentId() { return id; }
 }

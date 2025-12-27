@@ -5,14 +5,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "quote_campaigns")
+@Table(name = "document_campaigns")
 public class QuoteCampaign {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "quote_id", nullable = false)
+    @Column(name = "document_type", insertable = false, updatable = false)
+    private String documentType = "QUOTE";
+
+    @Column(name = "document_id", nullable = false)
     private Long quoteId;
 
     @Column(name = "campaign_name")
@@ -31,7 +34,7 @@ public class QuoteCampaign {
     private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "quote_id", insertable = false, updatable = false)
+    @JoinColumn(name = "document_id", insertable = false, updatable = false)
     private Quote quote;
 
     @PrePersist
