@@ -1,10 +1,23 @@
 package com.zen.entities.tenant;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.time.LocalDate;
 import java.util.List;
+
 import com.zen.entities.common.DocumentStatus;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "quotes")
@@ -73,6 +86,37 @@ public class Quote {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    // Workflow Fields
+    @Column(name = "workflow_status")
+    private String workflowStatus = "DRAFT";
+
+    @Column(name = "workflow_id")
+    private Long workflowId;
+
+    @Column(name = "current_approver_id")
+    private Long currentApproverId;
+
+    @Column(name = "current_approver_name")
+    private String currentApproverName;
+
+    @Column(name = "approval_level")
+    private Integer approvalLevel = 0;
+
+    @Column(name = "total_approval_levels")
+    private Integer totalApprovalLevels = 0;
+
+    @Column(name = "submitted_for_approval_at")
+    private LocalDateTime submittedForApprovalAt;
+
+    @Column(name = "approved_at")
+    private LocalDateTime approvedAt;
+
+    @Column(name = "rejected_at")
+    private LocalDateTime rejectedAt;
+
+    @Column(name = "approval_comments", columnDefinition = "TEXT")
+    private String approvalComments;
 
     // Restored relationships - tables will be created by V208 migration
     @OneToMany(mappedBy = "quote", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -232,4 +276,35 @@ public class Quote {
 
     public LocalDateTime getDeletedAt() { return deletedAt; }
     public void setDeletedAt(LocalDateTime deletedAt) { this.deletedAt = deletedAt; }
+
+    // Workflow Fields Getters/Setters
+    public String getWorkflowStatus() { return workflowStatus; }
+    public void setWorkflowStatus(String workflowStatus) { this.workflowStatus = workflowStatus; }
+
+    public Long getWorkflowId() { return workflowId; }
+    public void setWorkflowId(Long workflowId) { this.workflowId = workflowId; }
+
+    public Long getCurrentApproverId() { return currentApproverId; }
+    public void setCurrentApproverId(Long currentApproverId) { this.currentApproverId = currentApproverId; }
+
+    public String getCurrentApproverName() { return currentApproverName; }
+    public void setCurrentApproverName(String currentApproverName) { this.currentApproverName = currentApproverName; }
+
+    public Integer getApprovalLevel() { return approvalLevel; }
+    public void setApprovalLevel(Integer approvalLevel) { this.approvalLevel = approvalLevel; }
+
+    public Integer getTotalApprovalLevels() { return totalApprovalLevels; }
+    public void setTotalApprovalLevels(Integer totalApprovalLevels) { this.totalApprovalLevels = totalApprovalLevels; }
+
+    public LocalDateTime getSubmittedForApprovalAt() { return submittedForApprovalAt; }
+    public void setSubmittedForApprovalAt(LocalDateTime submittedForApprovalAt) { this.submittedForApprovalAt = submittedForApprovalAt; }
+
+    public LocalDateTime getApprovedAt() { return approvedAt; }
+    public void setApprovedAt(LocalDateTime approvedAt) { this.approvedAt = approvedAt; }
+
+    public LocalDateTime getRejectedAt() { return rejectedAt; }
+    public void setRejectedAt(LocalDateTime rejectedAt) { this.rejectedAt = rejectedAt; }
+
+    public String getApprovalComments() { return approvalComments; }
+    public void setApprovalComments(String approvalComments) { this.approvalComments = approvalComments; }
 }
