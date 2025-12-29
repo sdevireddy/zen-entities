@@ -43,24 +43,8 @@ public class SalesOrder extends DocumentBase {
     @Column(name = "so_status", length = 50, nullable = false)
     private SalesOrderStatus soStatus = SalesOrderStatus.DRAFT;
 
-    // ---- Financial totals (analytics ready) ----
-    @Column(name = "subtotal", precision = 15, scale = 2)
-    private BigDecimal subtotal;
-
-    @Column(name = "discount_total", precision = 15, scale = 2)
-    private BigDecimal discountTotal;
-
-    @Column(name = "tax_total", precision = 15, scale = 2)
-    private BigDecimal taxTotal;
-
-    @Column(name = "shipping_charges", precision = 15, scale = 2)
-    private BigDecimal shippingCharges;
-
-    @Column(name = "adjustment", precision = 15, scale = 2)
-    private BigDecimal adjustment;
-
-    @Column(name = "grand_total", precision = 15, scale = 2)
-    private BigDecimal grandTotal;
+    // Financial fields are inherited from DocumentBase with correct column names
+    // No need to override them here
 
     // ---- CRM / External Links ----
     @Column(name = "customer_id")

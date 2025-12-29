@@ -2,12 +2,24 @@ package com.zen.entities.tenant;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.persistence.*;
+
 import com.zen.entities.tenant.enums.PurchaseOrderStatus;
+
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "purchase_orders")
@@ -31,24 +43,8 @@ public class PurchaseOrder extends DocumentBase {
     @Column(name = "po_status", length = 50, nullable = false)
     private PurchaseOrderStatus poStatus = PurchaseOrderStatus.DRAFT;
     
-    // Financial fields
-    @Column(name = "subtotal_amount", precision = 15, scale = 2)
-    private BigDecimal subtotal;
-    
-    @Column(name = "discount_value", precision = 15, scale = 2)
-    private BigDecimal discountTotal;
-    
-    @Column(name = "tax_total_amount", precision = 15, scale = 2)
-    private BigDecimal taxTotal;
-    
-    @Column(name = "shipping_amount", precision = 15, scale = 2)
-    private BigDecimal shippingCharges;
-    
-    @Column(name = "adjustment_amount", precision = 15, scale = 2)
-    private BigDecimal adjustment;
-    
-    @Column(name = "grand_total_amount", precision = 15, scale = 2)
-    private BigDecimal grandTotal;
+    // Financial fields are inherited from DocumentBase with correct column names
+    // No need to override them here
     
     // Using inherited status field from DocumentBase mapped to po_status column
     
